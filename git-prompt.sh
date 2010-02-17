@@ -65,6 +65,7 @@
         upcase_hostname=${upcase_hostname:-on}
         count_only=${count_only:-off}
         rawhex_len=${rawhex_len:-5}
+        show_username=${show_username:-on}
 
         aj_max=20
 
@@ -258,8 +259,12 @@ set_shell_label() {
     export -f set_shell_label
 
 ###################################################### ID (user name)
-        id=`id -un`
-        id=${id#$default_user}
+        if [[ $show_username = "on" ]]; then
+                id=`id -un`
+                id=${id#$default_user}
+        else
+                id=""
+        fi
 
 ########################################################### TTY
         tty=`tty`
