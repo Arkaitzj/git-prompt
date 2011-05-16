@@ -322,6 +322,10 @@ set_shell_label() {
         # we might already have short host name
         host=${host%.$default_domain}
 
+#   DEBIAN_CHROOT
+        if [ -r /etc/debian_chroot ]; then
+                chroot_name="$white("$(cat /etc/debian_chroot)")$colors_reset"
+        fi
 
 #################################################################### WHO_WHERE
         #  [[user@]host[-tty]]
@@ -694,7 +698,7 @@ prompt_command_function() {
         # else eval cwd_cmd,  cwd should have path after exection
         eval "${cwd_cmd/\\/cwd=\\\\}"
 
-        PS1="$colors_reset$rc$head_local$color_who_where$dir_color$cwd$tail_local$dir_color$prompt_char $colors_reset"
+        PS1="$colors_reset$rc$chroot_name$head_local$color_who_where$dir_color$cwd$tail_local$dir_color$prompt_char $colors_reset"
 
         unset head_local tail_local pwd
  }
